@@ -1,3 +1,4 @@
+## 项目杂记
 ### 数据库设计
 1. 启动tomcat，如果启动日志出现 淇℃伅 乱码，修改 tomcat 下的 logging.properties这个文件 为 GBK 就好了。<br>
 \#java.util.logging.ConsoleHandler.encoding = UTF-8<br>
@@ -26,8 +27,6 @@ java.util.logging.ConsoleHandler.encoding = GBK
 * logger 日志记录器，主要用于存放日志对象，定义日志类型和日记级别等
 * appender 指定日志输出的目的地，也就是输出媒介。输出媒介可以是控制台、文件和远程套接字服务器等
 * layout 格式花日志输出信息
-
-
       
 ### SSM重点知识
 * SpringMVC: DispatcherServlet
@@ -35,3 +34,4 @@ java.util.logging.ConsoleHandler.encoding = GBK
 * Spring: IOC和AOP
 * MyBatis: ORM 
 含义：描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系数据库中
+
