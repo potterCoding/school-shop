@@ -1,4 +1,4 @@
-package cn.reminis.o2o.web;
+package cn.reminis.o2o.web.superadmin;
 
 import cn.reminis.o2o.entity.Area;
 import cn.reminis.o2o.service.AreaService;

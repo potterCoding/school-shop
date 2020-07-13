@@ -12,6 +12,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +30,7 @@ public class ShopServiceTest extends BaseTest {
     private ShopService shopService;
 
     @Test
-    public void testAddShop(){
+    public void testAddShop() throws IOException{
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
         Area area = new Area();
@@ -38,14 +41,15 @@ public class ShopServiceTest extends BaseTest {
         shop.setOwner(owner);
         shop.setArea(area);
         shop.setShopCategory(shopCategory);
-        shop.setShopName("测试店铺Service");
-        shop.setPhone("testService");
-        shop.setShopDesc("testService");
-        shop.setShopAddr("testService");
+        shop.setShopName("测试店铺3");
+        shop.setPhone("test3");
+        shop.setShopDesc("test3");
+        shop.setShopAddr("test3");
         shop.setPriority(1);
         shop.setAdvice("审核中");
         File shopImg = new File("G:/images/yellow.jpeg");
-        ShopExecution shopExecution = shopService.addShop(shop, shopImg);
+        InputStream inputStream = new FileInputStream(shopImg);
+        ShopExecution shopExecution = shopService.addShop(shop, inputStream,shopImg.getName());
         assertEquals(ShopStateEnum.CHECK.getState(),shopExecution.getState());
     }
 

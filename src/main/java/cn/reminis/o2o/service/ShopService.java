@@ -4,6 +4,7 @@ import cn.reminis.o2o.dto.ShopExecution;
 import cn.reminis.o2o.entity.Shop;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author sun
@@ -11,5 +12,5 @@ import java.io.File;
  * @description
  */
 public interface ShopService {
-    ShopExecution addShop(Shop shop, File shopImg);
+    ShopExecution addShop(Shop shop, InputStream shopImg, String fileName);
 }
