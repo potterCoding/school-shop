@@ -16,4 +16,7 @@
 		<!-- 打印查询语句 -->
 		<setting name="logImpl" value="STDOUT_LOGGING" />
 	</settings>
+	<plugins>
+		<plugin interceptor="cn.reminis.o2o.dao.split.DynamicDataSourceInterceptor" />
+	</plugins>
 </configuration>

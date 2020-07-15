@@ -30,6 +30,16 @@ public class ShopServiceTest extends BaseTest {
     private ShopService shopService;
 
     @Test
+    public void testModifyShop() throws Exception {
+        Shop shop = shopService.getShopById(2L);
+        File shopImg = new File("G:/images/study.jpg");
+        InputStream inputStream = new FileInputStream(shopImg);
+        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, "study.jpg");
+        System.out.println(shopExecution.getShop().getShopImg());
+    }
+
+
+    @Test
     public void testAddShop() throws IOException{
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();

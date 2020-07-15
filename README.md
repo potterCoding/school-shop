@@ -61,5 +61,22 @@
 * 在这个文件夹下面去存储店铺的图片
 * 把文件夹的地址更新回到这条数据
 
+MySQL主从分离实现
+* 数据库层面的主从配置实现
+   * 随着数据的不断 新增，position是不断变大的，达到一定大小，会分类出一个新文件，从0开始计算
+   * 不能在从库写数据，主库可以读数据，也可以写数据，但从库只能写数据
+   * 主库的版本一定要比从库的版本低
+   
+* 代码层面的读写分离实现（无需改动现有代码）
+
+主从库配置：
+打开主库的bin-log,设置server-id=1
+打开从库的relay-log,设置server-id=2
+master创建Repplication账号，指定IP支持从库访问
+从库中设置账号，设置master地址，position,打开slave
+
+AbstractRoutingDataSource
+    determineTargetDataSource() 决定目标的datasource
+        determineCurrentLookupKey() 决定数据源的名字
 
 

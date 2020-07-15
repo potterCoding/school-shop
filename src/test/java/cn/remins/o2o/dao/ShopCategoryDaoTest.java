@@ -23,7 +23,7 @@ public class ShopCategoryDaoTest extends BaseTest {
     @Test
     public void testQueryShopCategory(){
         List<ShopCategory> categories = shopCategoryDao.queryShopCategory(new ShopCategory());
-        assertEquals(2,categories.size());
+        assertEquals(1,categories.size());
 
         ShopCategory scp = new ShopCategory();
         scp.setShopCategoryId(1L);

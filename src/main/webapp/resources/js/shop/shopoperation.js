@@ -4,8 +4,8 @@ $(function() {
 
     var isEdit = shopId ? true : false;
 
-    var shopInfoUrl = '/o2o/shopadmin/getshopbyid?shopId=1';
-    // var shopInfoUrl = '/o2o/shopadmin/getshopbyid?shopId=' + shopId;
+    // var shopInfoUrl = '/o2o/shopadmin/getshopbyid?shopId=1';
+    var shopInfoUrl = '/o2o/shopadmin/getshopbyid?shopId=' + shopId;
     var initUrl = '/o2o/shopadmin/getshopinitinfo';
     var editShopUrl = '/o2o/shopadmin/registershop';
     if (isEdit) {
@@ -64,6 +64,10 @@ $(function() {
 
     $('#submit').click(function() {
         var shop = {};
+
+        if (isEdit) {
+            shop.shopId = shopId;
+        }
 
         shop.shopName = $('#shop-name').val();
         shop.shopAddr = $('#shop-addr').val();

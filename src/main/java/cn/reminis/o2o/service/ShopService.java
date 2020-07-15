@@ -3,7 +3,6 @@ package cn.reminis.o2o.service;
 import cn.reminis.o2o.dto.ShopExecution;
 import cn.reminis.o2o.entity.Shop;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -12,5 +11,29 @@ import java.io.InputStream;
  * @description
  */
 public interface ShopService {
+
+    /**
+     * 通过shopId获取店铺信息
+     * @param shopId
+     * @return
+     */
+    Shop getShopById(long shopId);
+
+    /**
+     * 注册店铺信息
+     * @param shop
+     * @param shopImg
+     * @param fileName
+     * @return
+     */
     ShopExecution addShop(Shop shop, InputStream shopImg, String fileName);
+
+    /**
+     * 更新店铺信息
+     * @param shop
+     * @param shopImg
+     * @return
+     * @throws RuntimeException
+     */
+    ShopExecution modifyShop(Shop shop, InputStream shopImg, String fileName);
 }

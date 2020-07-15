@@ -12,8 +12,6 @@ import cn.reminis.o2o.service.ShopCategoryService;
 import cn.reminis.o2o.service.ShopService;
 import cn.reminis.o2o.util.CodeUtil;
 import cn.reminis.o2o.util.HttpServletRequestUtil;
-import cn.reminis.o2o.util.ImageUtil;
-import cn.reminis.o2o.util.PathUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +45,38 @@ public class ShopManagermentController {
     @Autowired
     private AreaService areaService;
 
+    /**
+     * 店铺详情信息
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getshopbyid",method = RequestMethod.GET)
+    public Map<String,Object> getShopById(HttpServletRequest request) {
+        Map<String,Object> data = new HashMap<>();
+        long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+        if (shopId > -1) {
+            try {
+                Shop shop = shopService.getShopById(shopId);
+                List<Area> areaList = areaService.getAreaList();
+                data.put("shop",shop);
+                data.put("areaList",areaList);
+                data.put("success",true);
+            } catch (Exception e) {
+                data.put("success",false);
+                data.put("errMsg", e.getMessage());
+            }
+        } else {
+            data.put("success",false);
+            data.put("errMsg", "empty  shopId");
+        }
+        return data;
+    }
+
+    /**
+     * 店铺初始化信息
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/getshopinitinfo",method = RequestMethod.GET)
     public Map<String,Object> getShopInitInfo(){
@@ -66,6 +96,11 @@ public class ShopManagermentController {
         return data;
     }
 
+    /**
+     * 店铺注册
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/registershop",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> registerShop(HttpServletRequest request){
@@ -78,7 +113,7 @@ public class ShopManagermentController {
         //1.接收并转化相应的参数，包括店铺信息及图片信息 shopStr是前台约定好的
         String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
         ObjectMapper mapper = new ObjectMapper();
-        Shop shop = null;
+        Shop shop;
         try {
             shop = mapper.readValue(shopStr,Shop.class);
         } catch (IOException e) {
@@ -103,15 +138,20 @@ public class ShopManagermentController {
 
         //2.注册店铺
         if (shop != null && shopImg != null) {
-            PersonInfo owner = new PersonInfo();
-            //Session TODO
-            owner.setUserId(1L);
+            PersonInfo owner = (PersonInfo) request.getSession().getAttribute("user");
             shop.setOwner(owner);
-            ShopExecution se = null;
+            ShopExecution se;
             try {
                 se = shopService.addShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
                 if (se.getState() == ShopStateEnum.CHECK.getState()) {
                     result.put("success", true);
+                    //该用户可以操作的店铺列表
+                    List<Shop> shops = (List<Shop>) request.getSession().getAttribute("shopList");
+                    if (shops == null || shops.size() == 0) {
+                        shops = new ArrayList<>();
+                    }
+                    shops.add(se.getShop());
+                    request.getSession().setAttribute("shopList",shops);
                 } else {
                     result.put("success",false);
                     result.put("errMsg",se.getStateInfo());
@@ -130,6 +170,67 @@ public class ShopManagermentController {
 
         //3.返回结果
         return result;
+    }
+
+    @RequestMapping(value = "/modifyshop",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> modifyShop(HttpServletRequest request){
+        Map<String,Object> data = new HashMap<>();
+        if (!CodeUtil.checkVerifyCode(request)) {
+            data.put("success", false);
+            data.put("errMsg", "输入了错误的验证码");
+            return data;
+        }
+        //1.接收并转化相应的参数，包括店铺信息及图片信息 shopStr是前台约定好的
+        String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+        ObjectMapper mapper = new ObjectMapper();
+        Shop shop = null;
+        try {
+            shop = mapper.readValue(shopStr,Shop.class);
+        } catch (IOException e) {
+            data.put("success",false);
+            data.put("errMsg", e.getMessage());
+            return data;
+        }
+
+        CommonsMultipartFile shopImg = null;
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        //判断这个请求中是否有上传的文件流
+        if (resolver.isMultipart(request)) {
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            //shopImg是前台约定好的
+            shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
+        }
+        //2.修改店铺信息
+        if (shop != null && shop.getShopId() != null) {
+            ShopExecution se;
+            try {
+                if ( shopImg == null) {
+                    se = shopService.modifyShop(shop,null,null);
+                } else {
+                    se = shopService.modifyShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
+                }
+                if (se.getState() == ShopStateEnum.SUCCESS.getState()) {
+                    data.put("success", true);
+                } else {
+                    data.put("success",false);
+                    data.put("errMsg",se.getStateInfo());
+                }
+            } catch (ShopOperationException e) {
+                data.put("success",false);
+                data.put("errMsg",e.getMessage());
+            } catch (IOException e) {
+                data.put("success",false);
+                data.put("errMsg",e.getMessage());
+            }
+        } else {
+            data.put("success",false);
+            data.put("errMsg", "请输入shopId");
+        }
+
+        //3.返回结果
+        return data;
     }
 
     /**

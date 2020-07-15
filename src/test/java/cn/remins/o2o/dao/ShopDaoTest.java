@@ -24,6 +24,14 @@ public class ShopDaoTest extends BaseTest {
     private ShopDao shopDao;
 
     @Test
+    public void testQueryShopById(){
+        long shopId = 1;
+        Shop shop = shopDao.queryShopById(shopId);
+        System.out.println(shop.getArea().getAreaName());
+        System.out.println(shop.getArea().getAreaId());
+    }
+
+    @Test
     public void testInsertShop(){
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
@@ -35,11 +43,11 @@ public class ShopDaoTest extends BaseTest {
         shop.setOwner(owner);
         shop.setArea(area);
         shop.setShopCategory(shopCategory);
-        shop.setShopName("测试店铺");
-        shop.setPhone("test");
-        shop.setShopImg("test");
+        shop.setShopName("测试读写分离");
+        shop.setPhone("读写分离");
+        shop.setShopImg("读写分离");
         shop.setPriority(1);
-        shop.setShopAddr("test");
+        shop.setShopAddr("读写分离");
         shop.setAdvice("审核中");
         shop.setCreateTime(new Date());
         shop.setLastEditTime(new Date());

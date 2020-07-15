@@ -23,4 +23,5 @@ public interface ShopDao {
      */
     int updateShop(Shop shop);
 
+    Shop queryShopById(Long shopId);
 }
