@@ -7,6 +7,7 @@ import cn.reminis.o2o.enums.ShopStateEnum;
 import cn.reminis.o2o.exceptions.ShopOperationException;
 import cn.reminis.o2o.service.ShopService;
 import cn.reminis.o2o.util.ImageUtil;
+import cn.reminis.o2o.util.PageCaculator;
 import cn.reminis.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author sun
@@ -96,6 +98,21 @@ public class ShopServiceImpl implements ShopService {
                 throw new ShopOperationException("modifyShop error: " + e.getMessage());
             }
         }
+    }
+
+    @Override
+    public ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize) {
+        int rowIndex = PageCaculator.calculateRowIndex(pageIndex, pageSize);
+        List<Shop> shopList = shopDao.queryShopList(shopCondition, rowIndex, pageSize);
+        int shopCount = shopDao.queryShopCount(shopCondition);
+        ShopExecution shopExecution = new ShopExecution();
+        if (shopList != null) {
+            shopExecution.setCount(shopCount);
+            shopExecution.setShopList(shopList);
+        } else {
+            shopExecution.setState(ShopStateEnum.INNNER_ERROR.getState());
+        }
+        return shopExecution;
     }
 
     private void addShopImg(Shop shop, InputStream shopImg,String fileName) {

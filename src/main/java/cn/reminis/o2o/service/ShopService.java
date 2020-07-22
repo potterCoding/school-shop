@@ -36,4 +36,13 @@ public interface ShopService {
      * @throws RuntimeException
      */
     ShopExecution modifyShop(Shop shop, InputStream shopImg, String fileName);
+
+    /**
+     * 店铺分页条件列表
+     * @param shopCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize);
 }

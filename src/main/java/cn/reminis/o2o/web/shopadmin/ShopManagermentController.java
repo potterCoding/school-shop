@@ -45,6 +45,55 @@ public class ShopManagermentController {
     @Autowired
     private AreaService areaService;
 
+    @ResponseBody
+    @RequestMapping(value = "getshopmanagementinfo",method = RequestMethod.GET)
+    public Map<String,Object> getShopManagementInfo(HttpServletRequest request) {
+        Map<String,Object> data = new HashMap<>();
+        long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+        if (shopId <=0) {
+            Object currentShop = request.getSession().getAttribute("currentShop");
+            if (currentShop == null) {
+                data.put("redirect",true);
+                data.put("url","/o2o/shopadmin/shoplist");
+            } else {
+                Shop shop = (Shop) currentShop;
+                data.put("redirect",false);
+                data.put("shopId",shop.getShopId());
+            }
+        } else {
+            Shop currentShop = new Shop();
+            currentShop.setShopId(shopId);
+            request.getSession().setAttribute("currentShop",currentShop);
+            data.put("redirect",false);
+        }
+        return data;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "getshoplist",method = RequestMethod.GET)
+    public Map<String,Object> getShopList(HttpServletRequest request) {
+        Map<String,Object> data = new HashMap<>();
+        PersonInfo user = new PersonInfo();
+        user.setUserId(1L);
+        user.setUserName("test");
+        request.getSession().setAttribute("user",user);
+
+        user = (PersonInfo) request.getSession().getAttribute("user");
+        try {
+            Shop shopCondition = new Shop();
+            shopCondition.setOwner(user);
+            ShopExecution se = shopService.getShopList(shopCondition,0,20);
+            data.put("shopList",se.getShopList());
+            data.put("user",user);
+            data.put("success",true);
+        } catch (Exception e) {
+            data.put("success",false);
+            data.put("errMsg", e.getMessage());
+        }
+
+        return data;
+    }
+
     /**
      * 店铺详情信息
      * @param request
