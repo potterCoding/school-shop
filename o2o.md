@@ -35,3 +35,5 @@ java.util.logging.ConsoleHandler.encoding = GBK
 * MyBatis: ORM 
 含义：描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系数据库中
 
+### 单元测试小知识
+* 控制的测试方法的执行顺序：使用注解@FixMethodOrder(MethodSorters.NAME_ASCENDING),表示按照方法名称的顺序执行，例如testA,testB,testC,会按照A,B,C的顺序执行
