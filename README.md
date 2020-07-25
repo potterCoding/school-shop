@@ -78,5 +78,10 @@ master创建Repplication账号，指定IP支持从库访问
 AbstractRoutingDataSource
     determineTargetDataSource() 决定目标的datasource
         determineCurrentLookupKey() 决定数据源的名字
+        
+### 商品模块
+商品添加
+* 实现商品添加
+* 掌握批量图片的添加
 
 

@@ -1,5 +1,6 @@
 package cn.reminis.o2o.util;
 
+import cn.reminis.o2o.dto.ImageHolder;
 import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -42,24 +43,49 @@ public class ImageUtil {
 
     /**
      * 处理缩略图并返回新生成图片的绝对值路径
-     * @param multipartFile
+     * @param thumbanil
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(InputStream multipartFile, String targetAddr, String fileName) {
+    public static String generateThumbnail(ImageHolder thumbanil, String targetAddr) {
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(fileName);
+        String extension = getFileExtension(thumbanil.getImageName());
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.debug("current relativeAddr is: " + relativeAddr);
         File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
         logger.debug("current complete addr is: " + PathUtil.getImgBasePath() + relativeAddr);
         try {
-            Thumbnails.of(multipartFile).size(200, 200)
+            Thumbnails.of(thumbanil.getImage()).size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water.png")), 0.5f)
                     .outputQuality(0.8f).toFile(dest);
         } catch (Exception e) {
             logger.error("generateThumbnail error: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return relativeAddr;
+    }
+
+    /**
+     * 处理缩略图并返回新生成图片的绝对值路径
+     * @param thumbanil
+     * @param targetAddr
+     * @return
+     */
+    public static String generateNormalThumbnail(ImageHolder thumbanil, String targetAddr) {
+        String realFileName = getRandomFileName();
+        String extension = getFileExtension(thumbanil.getImageName());
+        makeDirPath(targetAddr);
+        String relativeAddr = targetAddr + realFileName + extension;
+        logger.debug("current relativeAddr is: " + relativeAddr);
+        File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+        logger.debug("current complete addr is: " + PathUtil.getImgBasePath() + relativeAddr);
+        try {
+            Thumbnails.of(thumbanil.getImage()).size(337, 640)
+                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water.png")), 0.5f)
+                    .outputQuality(0.35f).toFile(dest);
+        } catch (Exception e) {
+            logger.error("generateNormalThumbnail error: " + e.getMessage());
             e.printStackTrace();
         }
         return relativeAddr;

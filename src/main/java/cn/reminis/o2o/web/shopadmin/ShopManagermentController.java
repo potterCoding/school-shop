@@ -1,5 +1,6 @@
 package cn.reminis.o2o.web.shopadmin;
 
+import cn.reminis.o2o.dto.ImageHolder;
 import cn.reminis.o2o.dto.ShopExecution;
 import cn.reminis.o2o.entity.Area;
 import cn.reminis.o2o.entity.PersonInfo;
@@ -191,7 +192,8 @@ public class ShopManagermentController {
             shop.setOwner(owner);
             ShopExecution se;
             try {
-                se = shopService.addShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
+                ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                se = shopService.addShop(shop,imageHolder);
                 if (se.getState() == ShopStateEnum.CHECK.getState()) {
                     result.put("success", true);
                     //该用户可以操作的店铺列表
@@ -256,9 +258,10 @@ public class ShopManagermentController {
             ShopExecution se;
             try {
                 if ( shopImg == null) {
-                    se = shopService.modifyShop(shop,null,null);
+                    se = shopService.modifyShop(shop,null);
                 } else {
-                    se = shopService.modifyShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
+                    ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                    se = shopService.modifyShop(shop,imageHolder);
                 }
                 if (se.getState() == ShopStateEnum.SUCCESS.getState()) {
                     data.put("success", true);

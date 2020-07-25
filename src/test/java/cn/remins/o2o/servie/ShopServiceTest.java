@@ -1,5 +1,6 @@
 package cn.remins.o2o.servie;
 
+import cn.reminis.o2o.dto.ImageHolder;
 import cn.reminis.o2o.dto.ShopExecution;
 import cn.reminis.o2o.entity.Area;
 import cn.reminis.o2o.entity.PersonInfo;
@@ -34,7 +35,8 @@ public class ShopServiceTest extends BaseTest {
         Shop shop = shopService.getShopById(2L);
         File shopImg = new File("G:/images/study.jpg");
         InputStream inputStream = new FileInputStream(shopImg);
-        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, "study.jpg");
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(),inputStream);
+        ShopExecution shopExecution = shopService.modifyShop(shop, imageHolder);
         System.out.println(shopExecution.getShop().getShopImg());
     }
 
@@ -59,7 +61,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setAdvice("审核中");
         File shopImg = new File("G:/images/yellow.jpeg");
         InputStream inputStream = new FileInputStream(shopImg);
-        ShopExecution shopExecution = shopService.addShop(shop, inputStream,shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(),inputStream);
+        ShopExecution shopExecution = shopService.addShop(shop, imageHolder);
         assertEquals(ShopStateEnum.CHECK.getState(),shopExecution.getState());
     }
 

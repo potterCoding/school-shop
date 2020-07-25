@@ -1,5 +1,6 @@
 package cn.reminis.o2o.service;
 
+import cn.reminis.o2o.dto.ImageHolder;
 import cn.reminis.o2o.dto.ShopExecution;
 import cn.reminis.o2o.entity.Shop;
 
@@ -22,20 +23,18 @@ public interface ShopService {
     /**
      * 注册店铺信息
      * @param shop
-     * @param shopImg
-     * @param fileName
+     * @param thumbanil
      * @return
      */
-    ShopExecution addShop(Shop shop, InputStream shopImg, String fileName);
+    ShopExecution addShop(Shop shop, ImageHolder thumbanil);
 
     /**
      * 更新店铺信息
      * @param shop
-     * @param shopImg
+     * @param thumbanil
      * @return
-     * @throws RuntimeException
      */
-    ShopExecution modifyShop(Shop shop, InputStream shopImg, String fileName);
+    ShopExecution modifyShop(Shop shop, ImageHolder thumbanil);
 
     /**
      * 店铺分页条件列表
