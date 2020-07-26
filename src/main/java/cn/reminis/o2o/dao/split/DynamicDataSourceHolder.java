@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 public class DynamicDataSourceHolder {
     private static Logger logger = LoggerFactory.getLogger(DynamicDataSourceHolder.class);
 
+    //ThreadLocal是线程安全的
     private static ThreadLocal<String> contextHolder = new ThreadLocal<>();
     public static final String DB_MASTER = "master";
     public static final String DB_SLAVE = "slave";

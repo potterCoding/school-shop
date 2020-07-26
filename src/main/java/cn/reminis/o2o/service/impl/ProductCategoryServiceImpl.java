@@ -1,7 +1,9 @@
 package cn.reminis.o2o.service.impl;
 
 import cn.reminis.o2o.dao.ProductCategoryDao;
+import cn.reminis.o2o.dao.ProductDao;
 import cn.reminis.o2o.dto.ProductCategoryExecution;
+import cn.reminis.o2o.entity.Product;
 import cn.reminis.o2o.entity.ProductCategory;
 import cn.reminis.o2o.enums.ProductCategoryStateEnum;
 import cn.reminis.o2o.exceptions.ProductCategoryOperationException;
@@ -23,6 +25,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
     private ProductCategoryDao productCategoryDao;
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public List<ProductCategory> getProductCategoryList(Long shopId) {
@@ -53,7 +57,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     @Transactional
     public ProductCategoryExecution deleteProductCategory(Long produceCategoryId, Long shopId) throws ProductCategoryOperationException {
-        //TODO 将此商品类别下的商品的类别id置为空
+        //将此商品类别下的商品的类别id置为空
+        try {
+            int num = productDao.updateProductCategoryIdToNull(produceCategoryId);
+            if (num < 0) {
+                throw new ProductCategoryOperationException("商品类别更新失败");
+            }
+        } catch (Exception e) {
+            throw new ProductCategoryOperationException("deleteProductCategory error: " + e.getMessage());
+        }
+        //删除该商品类别
         try {
             int num = productCategoryDao.deleteProductCategoryDao(produceCategoryId, shopId);
             if (num <= 0) {

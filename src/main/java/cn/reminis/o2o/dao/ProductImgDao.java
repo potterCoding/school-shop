@@ -19,4 +19,17 @@ public interface ProductImgDao {
      */
     int batchInsertProductImg(@Param("productImgList") List<ProductImg> productImgList);
 
+    /**
+     * 删除指定商品下的详情图
+     * @param productId
+     * @return
+     */
+    int deleteProductImgByProductId(Long productId);
+
+    /**
+     * 通过商品id，获取商品详情图
+     * @param productId
+     * @return
+     */
+    List<ProductImg> queryProductImgList(Long productId);
 }

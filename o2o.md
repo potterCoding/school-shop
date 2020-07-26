@@ -37,3 +37,6 @@ java.util.logging.ConsoleHandler.encoding = GBK
 
 ### 单元测试小知识
 * 控制的测试方法的执行顺序：使用注解@FixMethodOrder(MethodSorters.NAME_ASCENDING),表示按照方法名称的顺序执行，例如testA,testB,testC,会按照A,B,C的顺序执行
+
+### mybatis中的小知识
+* 写like语句的时候，一般会写成like '% %',在mybatis里面就应该是like '%${name}%',而不是‘%#{name}%’， ${name}是不带单引号的，而#{name}是带单引号的

@@ -26,4 +26,29 @@ public interface ProductService {
      */
     ProductExecution addProduct(Product product, ImageHolder thumbnail,List<ImageHolder> productImgList) throws ProductOperationException;
 
+    /**
+     * 查询商品列表分页，可根据商品名称模糊查询，商品状态，商品类别
+     * @param productCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    ProductExecution getProductLsit(Product productCondition,int pageIndex,int pageSize);
+
+    /**
+     * 通过商品id查询唯一的 商品信息
+     * @param productId
+     * @return
+     */
+    Product getProductById(Long productId);
+
+    /**
+     * 修改商品信息及图片处理
+     * @param thumbnail
+     * @param productImageHolderList
+     * @return
+     */
+    ProductExecution modifyProduct(Product product,ImageHolder thumbnail,
+                                   List<ImageHolder> productImageHolderList) throws ProductOperationException;
+
 }
