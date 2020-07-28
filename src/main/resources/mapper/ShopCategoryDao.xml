@@ -9,10 +9,13 @@
         shop_category_img,priority,create_time,last_edit_time,parent_id
         FROM tb_shop_category
         <where>
+            <if test="shopCategoryCondition == null">
+                AND parent_id IS NULL
+            </if>
             <if test="shopCategoryCondition != null">
                 AND parent_id IS NOT NULL
             </if>
-            <if test="shopCategoryCondition.parent != null">
+            <if test="shopCategoryCondition != null and shopCategoryCondition.parent != null">
                 AND parent_id = #{shopCategoryCondition.parent.shopCategoryId}
             </if>
         </where>

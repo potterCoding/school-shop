@@ -29,6 +29,7 @@
         <property name="acquireRetryAttempts" value="2" />
     </bean>
 
+    <!--主库的数据源配置-->
     <bean id="master" parent="abstractDataSource">
         <property name="driverClass" value="${jdbc.driver}" />
         <property name="jdbcUrl" value="${jdbc.master.url}" />
@@ -36,6 +37,7 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
 
+    <!--从库的数据源配置-->
     <bean id="slave" parent="abstractDataSource">
         <property name="driverClass" value="${jdbc.driver}" />
         <property name="jdbcUrl" value="${jdbc.slave.url}" />
