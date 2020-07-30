@@ -17,7 +17,7 @@ public class PathUtil {
         String os = System.getProperty("os.name");
         String basePath = "";
         if (os.toLowerCase().startsWith("win")) {
-            basePath = "G:/images/";
+            basePath = "G:/images";
         }else {
             basePath = "/home/reminis/imgage";
         }
@@ -31,8 +31,25 @@ public class PathUtil {
      * @return
      */
     public static String getShopImagePath(Long shopIp){
-        String imagePath = "upload/item/shop/" + shopIp + "/";
+        String imagePath = "/upload/images/item/shop/" + shopIp + "/";
         return imagePath.replace("/",separator);
     }
 
+    public static String getHeadLineImagePath() {
+        String headLineImagePath = "/upload/images/item/headtitle/";
+        headLineImagePath = headLineImagePath.replace("/", separator);
+        return headLineImagePath;
+    }
+
+    public static String getShopCategoryImagePath() {
+        String shopCategoryImagePath = "/upload/images/item/shopcategory/";
+        shopCategoryImagePath = shopCategoryImagePath.replace("/", separator);
+        return shopCategoryImagePath;
+    }
+
+    public static String getPersonInfoImagePath() {
+        String personInfoImagePath = "/upload/images/item/personinfo/";
+        personInfoImagePath = personInfoImagePath.replace("/", separator);
+        return personInfoImagePath;
+    }
 }

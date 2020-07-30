@@ -76,12 +76,20 @@ $(function() {
 				});
 				$('.list-div').append(html);
 				var total = $('.list-div .card').length;
-				if (total >= maxItems) {
-					// 加载完毕，则注销无限加载事件，以防不必要的加载
-					$.detachInfiniteScroll($('.infinite-scroll'));
-					// 删除加载提示符
-					$('.infinite-scroll-preloader').remove();
+				// if (total >= maxItems) {
+				// 	// 加载完毕，则注销无限加载事件，以防不必要的加载
+				// 	$.detachInfiniteScroll($('.infinite-scroll'));
+				// 	// 删除加载提示符
+				// 	$('.infinite-scroll-preloader').remove();
+				// }
+
+                if (total >= maxItems) {
+                    // 隐藏加载提示符
+                    $('.infinite-scroll-preloader').hide();
+                } else {
+                    $('.infinite-scroll-preloader').show();
 				}
+
 				pageNum += 1;
 				loading = false;
 				$.refreshScroller();
@@ -126,7 +134,7 @@ $(function() {
 								+ productId;
 					});
 
-	$('#search').on('input', function(e) {
+	$('#search').on('change', function(e) {
 		productName = e.target.value;
 		$('.list-div').empty();
 		pageNum = 1;
