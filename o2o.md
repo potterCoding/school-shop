@@ -40,3 +40,32 @@ java.util.logging.ConsoleHandler.encoding = GBK
 
 ### mybatis中的小知识
 * 写like语句的时候，一般会写成like '% %',在mybatis里面就应该是like '%${name}%',而不是‘%#{name}%’， ${name}是不带单引号的，而#{name}是带单引号的
+
+### 微信测试号的申请与连接以获取微信用户信息
+* 编写 SignUtil （微信请求校验工具类）
+* 编写 WechatController （设置在URL中的路由）
+* 访问微信测试号登录页面，通过打开自己手机的微信，扫一扫登录
+  https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
+* 【测试号信息】appID（开发者ID）和appsecret（开发者密码）
+* 【接口配置信息】URL和token
+* 【JS接口安全域名】填写域名信息，也可以是公网IP
+* 【测试号二维码】
+* 【体验接口权限表】网页服务-网页账号-修改，设置为域名，即公众号的回调地址
+* 接下来获取关注此公众号的用户信息，需要编写五个类
+   + WechatLoginController 主要用来获取已关注此微信号的用户信息并做对应处理
+   + UserAccessToken 用户AccessToken实体类，用来接收accessToken以及openid等信息
+   + WechatUser 微信用户实体类，用来接收昵称、openid等用户信息
+   + WechatUtil  主要用来提交https请求给微信获取用户
+   + MyX509TrustManager 主要继承X509TrustManager做https证书信任管理器
+* 重新打包部署,发布完成后，使用微信开发者工具访问相应链接：
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=您的appid
+&redirect_uri=http://o2o.yitiaojieinfo.com/o2o/wechatlogin/logincheck
+&role_type=1&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
+
+### 远程调试
+在本地调试远程程序，由于root启动的进程是不支持远程调试的，我们需要创建一个普通账号来启动程序，我们需要以该账号
+重新装一个tomcat.
+* adduser work
+* passwd work
+* 停掉当前root启动的tomcat
+* 切换账号 su work，进入到根目录 cd ~
