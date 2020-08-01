@@ -58,9 +58,7 @@ java.util.logging.ConsoleHandler.encoding = GBK
    + WechatUtil  主要用来提交https请求给微信获取用户
    + MyX509TrustManager 主要继承X509TrustManager做https证书信任管理器
 * 重新打包部署,发布完成后，使用微信开发者工具访问相应链接：
-https://open.weixin.qq.com/connect/oauth2/authorize?appid=您的appid
-&redirect_uri=http://o2o.yitiaojieinfo.com/o2o/wechatlogin/logincheck
-&role_type=1&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa18b6661330ce005&redirect_uri=http://132.232.18.43/o2o/wechatlogin/logincheck&role_type=1&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
 
 ### 远程调试
 在本地调试远程程序，由于root启动的进程是不支持远程调试的，我们需要创建一个普通账号来启动程序，我们需要以该账号
@@ -68,4 +66,5 @@ https://open.weixin.qq.com/connect/oauth2/authorize?appid=您的appid
 * adduser work
 * passwd work
 * 停掉当前root启动的tomcat
-* 切换账号 su work，进入到根目录 cd ~
+* 切换账号 su work，进入到根目录 cd ~,上传一个tomcat当该目录并进行解压，修改配置文件信息
+

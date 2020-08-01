@@ -1,3 +1,4 @@
+/*
 package cn.reminis.o2o.util;
 
 import sun.misc.BASE64Decoder;
@@ -64,4 +65,4 @@ public class DESUtils {
 		System.out.println(getEncryptString("665ae80dba31fc91ab6191e7da4d676d"));
 	}
 
-}
+}*/

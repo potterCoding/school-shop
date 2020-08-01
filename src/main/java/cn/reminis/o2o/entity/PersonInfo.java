@@ -10,7 +10,7 @@ import java.util.Date;
 public class PersonInfo {
 
     private Long userId;
-    private String userName;
+    private String name;
     private String profileImg;
     private String email;
     private String gender;
@@ -28,12 +28,12 @@ public class PersonInfo {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getProfileImg() {
@@ -96,7 +96,7 @@ public class PersonInfo {
     public String toString() {
         return "PersonInfo{" +
                 "userId=" + userId +
-                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
                 ", profileImg='" + profileImg + '\'' +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +

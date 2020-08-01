@@ -76,7 +76,7 @@ public class ShopManagermentController {
         Map<String,Object> data = new HashMap<>();
         PersonInfo user = new PersonInfo();
         user.setUserId(1L);
-        user.setUserName("test");
+        user.setName("test");
         request.getSession().setAttribute("user",user);
 
         user = (PersonInfo) request.getSession().getAttribute("user");

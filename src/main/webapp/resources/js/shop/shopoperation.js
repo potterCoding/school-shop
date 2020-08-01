@@ -109,7 +109,7 @@ $(function() {
                     if (isEdit){
                         $('#captcha_img').click();
                     } else{
-                        window.location.href="/shopadmin/shoplist";
+                        window.location.href="/o2o/shopadmin/shoplist";
                     }
                 } else {
                     $.toast('提交失败！');
