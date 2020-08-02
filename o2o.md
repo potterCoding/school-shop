@@ -66,5 +66,13 @@ https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa18b6661330ce005&red
 * adduser work
 * passwd work
 * 停掉当前root启动的tomcat
-* 切换账号 su work，进入到根目录 cd ~,上传一个tomcat当该目录并进行解压，修改配置文件信息
+* 切换账号 su work，进入到根目录 cd ~,上传一个tomcat当该目录并进行解压，修改配置文件信息（/bin/catalina.sh）
 
+### 加密连接数据库明文密码
+* 利用PropertyPlaceHolderConfigure
+
+### 加入缓存技术
+&emsp;&emsp;高性能分布式内存缓存服务器
+* 了解什么是redis和Jedis
+* redis配置
+* Jedis基本通用函数配置及使用

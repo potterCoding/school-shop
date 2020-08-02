@@ -1,4 +1,3 @@
-/*
 package cn.reminis.o2o.util;
 
 import sun.misc.BASE64Decoder;
@@ -57,12 +56,17 @@ public class DESUtils {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(getEncryptString("root"));
 		System.out.println(getEncryptString("230230"));
 		System.out.println(getEncryptString("wxd7f6c5b8899fba83"));
 		System.out.println(getEncryptString("665ae80dba31fc91ab6191e7da4d676d"));
+
+        System.out.println(getDecryptString("WnplV/ietfQ="));
+        System.out.println(getDecryptString("TdixoQRe6Y0="));
+        System.out.println(getDecryptString("PTv/7qETW0kO5N0WT223IlBEOUuK0+SO"));
+        System.out.println(getDecryptString("jOjEubTD3dTzTbNzX+vREKnTJvvKZRud6c3712kCaGgfJAfVsP+M2w=="));
 	}
 
-}*/
+}
