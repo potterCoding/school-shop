@@ -6,7 +6,7 @@
 
     <resultMap id="wechatAuthResultMap" type="cn.reminis.o2o.entity.WechatAuth">
         <id column="wechat_auth_id" property="wechatAuthId" />
-        <result column="user_id" property="userId" />
+        <result column="user_id" property="personInfo.userId" />
         <result column="open_id" property="openId" />
         <result column="create_time" property="createTime" />
         <association property="personInfo" column="user_id" javaType="cn.reminis.o2o.entity.PersonInfo">

@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface HeadLineService {
 
+    String HLLISTKEY = "headlinelist";
+
     /**
      * 根据传入的条件查寻指定的条件列表
      * @param headLineCondition

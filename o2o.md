@@ -74,5 +74,32 @@ https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa18b6661330ce005&red
 ### 加入缓存技术
 &emsp;&emsp;高性能分布式内存缓存服务器
 * 了解什么是redis和Jedis
+   + 查看当前redis有没有设置密码：config get requirepass
+   + redis密码设置：config set requirepass '新密码',这只是暂时的，重启后就会失效
+   + 永久修改，需要修改配置文件
 * redis配置
 * Jedis基本通用函数配置及使用
+
+#### Linux下设置redis使用service服务启动
+1. 设置redis.conf中daemonize为yes,确保守护进程开启,也就是在后台可以运行
+   + vi编辑redis安装目录里面的redis.conf文件
+   + vi /usr/redis/redis-5.0.5/redis.conf 
+2. 复制redis配置文件(启动脚本需要用到配置文件内容,所以要复制)
+   + 在/etc下新建redis文件夹 mkdir /etc/redis
+   + 把安装redis目录里面的redis.conf文件复制到/etc/redis/6379.conf里面,6379.conf是取的文件名称,启动脚本里面的变量会读取这个名称,所以要是redis的端口号改了,这里也要修改
+   + cp /usr/redis/redis-5.0.5/redis.conf /etc/redis/6379.conf
+3. 复制redis启动脚本
+   + redis启动脚本一般在redis根目录的utils,如果不知道路径,可以先查看路径 
+   + find / -name redis_init_script
+   + 复制启动脚本到/etc/init.d/redis文件中
+   + cp /usr/redis/redis-5.0.5//utils/redis_init_script /etc/init.d/redis
+4. 修改启动脚本参数
+   + vi /etc/init.d/redis
+   + 修改原先配置如下：
+      * EXEC=/usr/local/bin/redis-server
+      * CLIEXEC=/usr/local/bin/redis-cli
+5. 启动redis
+   + 打开redis命令:service redis start
+   + 关闭redis命令:service redis stop
+   + 设为开机启动:chkconfig redis on
+   + 设为开机关闭:chkconfig redis off
